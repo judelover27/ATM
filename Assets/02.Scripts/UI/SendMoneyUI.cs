@@ -1,11 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -16,9 +12,6 @@ public class SendMoneyUI : MonoBehaviour
     public TMP_InputField sendMoneyInput;
     public Button sendMoneyBtn;
     public Button backBtn;
-
-
-
 
     private void OnEnable()
     {
