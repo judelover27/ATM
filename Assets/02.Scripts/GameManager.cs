@@ -72,9 +72,4 @@ public class GameManager : MonoBehaviour
         }
         else return false;
     }
-
-
-    public void Withdrawal(int value)
-    {
-        
 }
