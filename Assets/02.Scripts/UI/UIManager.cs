@@ -71,10 +71,12 @@ public class UIManager : MonoBehaviour
     public void OnSignIn()
     {
         ChangeState(popupBankState);
+        popupBankUI.OnClickHome();
     }
 
     public void OnLogOut()
     {
-        ChangeState(signInState) ;
+        popupBankUI.OnClickHome();
+        ChangeState(signInState);
     }
 }

@@ -25,6 +25,18 @@ public class SignUpUI : MonoBehaviour
     }
     public void OnSignUp()
     {
+        if(id.text == "")
+        {
+            popupError.SetErrorText("Plese input ID");
+            return;
+        }
+
+        if (userName.text == "")
+        {
+            popupError.SetErrorText("Plese input userName");
+            return;
+        }
+
         if (GameManager.Instance.dataBaseDictionay.ContainsKey(id.text))
         {
             popupError.SetErrorText("This ID is already taken.");

@@ -56,7 +56,7 @@ public class DepositUI : MonoBehaviour
             if (GameManager.Instance.currentUserData != null)
             {
                 UserData userData = GameManager.Instance.currentUserData;
-                if (userData.cash > value)
+                if (userData.cash >= value)
                 {
                     userData.balance += value;
                     userData.cash -= value;

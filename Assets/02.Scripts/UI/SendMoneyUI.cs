@@ -63,11 +63,11 @@ public class SendMoneyUI : MonoBehaviour
             UserData userData = GameManager.Instance.currentUserData;
             UserData recipientData = GameManager.Instance.dataBaseDictionay[id];
 
-            if (userData.balance > value)
+            if (userData.balance >= value)
             {
                 userData.balance -= value;
                 recipientData.balance += value;
-                UIManager.Instance.popupBankUI.PopupErrorUI($"{value} is sucessfully sent to {recipientData.userName}!");
+                UIManager.Instance.popupBankUI.PopupErrorUI($"{value:N0} is sucessfully sent to {recipientData.userName}!");
                 GameManager.Instance.SaveUserData();
                 GameManager.Instance.userInfo.Refresh();
             }

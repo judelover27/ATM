@@ -57,7 +57,7 @@ public class WithdrawUI : MonoBehaviour
             if (GameManager.Instance.currentUserData != null)
             {
                 UserData userData = GameManager.Instance.currentUserData;
-                if (userData.balance > value)
+                if (userData.balance >= value)
                 {
                     userData.balance -= value;
                     userData.cash += value;
