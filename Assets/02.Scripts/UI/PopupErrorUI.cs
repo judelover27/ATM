@@ -27,6 +27,7 @@ public class PopupErrorUI : MonoBehaviour
     public void SetErrorText(string text)
     {
         errorText.text = text;
+        gameObject.SetActive(true);
     }
 
     public void OnConfirmBtn()

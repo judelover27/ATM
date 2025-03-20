@@ -2,27 +2,17 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PopupBank : MonoBehaviour
+public class PopupBankUI : MonoBehaviour
 {
-    private static PopupBank instance;
-    public static PopupBank Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<PopupBank>();
-                DontDestroyOnLoad(instance.gameObject);
-            }
-            return instance;
-        }
-    }
-
+    
     public GameObject homeUI;
     public GameObject depositUI;
     public GameObject withdrawalUI;
+    public GameObject sendMoneyUI;
     public GameObject backBtn;
+    public Button logoutBtn;
     public PopupErrorUI errorUI;
 
     private IState currentState;
@@ -30,25 +20,19 @@ public class PopupBank : MonoBehaviour
     private HomeState homeState;
     private DepositState depositState;
     private WithdrawState withdrawalState;
+    private SendMoneyState sendMoneyState;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         homeState = new HomeState(this);
         depositState = new DepositState(this);
         withdrawalState = new WithdrawState(this);
+        sendMoneyState = new SendMoneyState(this);
     }
 
     private void Start()
     {
+        logoutBtn.onClick.AddListener(OnLogOut);
         currentState = homeState;
         ChangeState(currentState);
     }
@@ -79,12 +63,23 @@ public class PopupBank : MonoBehaviour
         ChangeState(withdrawalState);
     }
 
+    public void OnClickSendMoney()
+    {
+        ChangeState(sendMoneyState);
+    }
+
+    public void OnLogOut()
+    {
+        GameManager.Instance.currentUserData = null;
+        GameManager.Instance.currentUserID = null;
+        UIManager.Instance.OnLogOut();
+    }
+
     public void PopupErrorUI(string text)
     {
         if(errorUI != null)
         {
             errorUI.SetErrorText(text);
-            errorUI.gameObject.SetActive(true);
         }
     }
 }

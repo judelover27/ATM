@@ -4,31 +4,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class WithdrawUI : MonoBehaviour
 {
-    public Button WithdrawBtn0;
-    public Button WithdrawBtn1;
-    public Button WithdrawBtn2;
     public TMP_InputField WithdrawInput;
     public Button WithdrawBtnInput;
     public Button backBtn;
+    public List<TransactionBtnInfo> withdraws;
+
 
 
 
     private void OnEnable()
     {
-        WithdrawBtn0.onClick.AddListener(OnBtn0);
-        WithdrawBtn1.onClick.AddListener(OnBtn1);
-        WithdrawBtn2.onClick.AddListener(OnBtn2);
+        foreach (var withdraw in withdraws)
+        {
+            withdraw.button.onClick.AddListener(() => Withdraw(withdraw.value));
+        }
+
         WithdrawBtnInput.onClick.AddListener(OnBtnInput);
         backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     private void OnDisable()
     {
-        WithdrawBtn0.onClick.RemoveListener(OnBtn0);
-        WithdrawBtn1.onClick.RemoveListener(OnBtn1);
-        WithdrawBtn2.onClick.RemoveListener(OnBtn2);
+        foreach (var withdraw in withdraws)
+        { 
+            withdraw.button.onClick.RemoveAllListeners(); 
+        }
+
         WithdrawBtnInput.onClick.RemoveListener(OnBtnInput);
         backBtn.onClick.RemoveListener(OnBackBtnClick);
     }
@@ -36,35 +41,22 @@ public class WithdrawUI : MonoBehaviour
 
     void OnBackBtnClick()
     {
-        PopupBank.Instance.OnClickHome();
+        UIManager.Instance.popupBankUI.OnClickHome();
     }
 
-    void OnBtn0()
-    {
-        Withdraw(10000);
-    }
-    void OnBtn1()
-    {
-        Withdraw(30000);
-    }
-
-    void OnBtn2()
-    {
-        Withdraw(50000);
-    }
 
     void OnBtnInput()
     {
-        Withdraw(InputWithdraw());
+        Withdraw(InputValue());
     }
 
     public void Withdraw(int value)
     {
         if (value > 0)
         {
-            if (GameManager.Instance.userData != null)
+            if (GameManager.Instance.currentUserData != null)
             {
-                UserData userData = GameManager.Instance.userData;
+                UserData userData = GameManager.Instance.currentUserData;
                 if (userData.balance > value)
                 {
                     userData.balance -= value;
@@ -74,15 +66,15 @@ public class WithdrawUI : MonoBehaviour
                 }
                 else
                 {
-                    PopupBank.Instance.PopupErrorUI("Deposit is unsufficient!");
+                    UIManager.Instance.popupBankUI.PopupErrorUI("Deposit is unsufficient!");
                 }
             }
         }
-    
+
         else Debug.Log("0보다 큰 액수를 입력해주세요.");
     }
 
-    int InputWithdraw()
+    int InputValue()
     {
         if (WithdrawInput != null)
         {

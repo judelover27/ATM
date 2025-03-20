@@ -10,16 +10,16 @@ public class UserInfo : MonoBehaviour
     public TextMeshProUGUI balance;
     public TextMeshProUGUI cash;
 
-    private void Update()
-    {
-
-    }
-
     public void Refresh()
     {
-        userName.text = GameManager.Instance.userData.userName;
-        InputValue(balance, GameManager.Instance.userData.balance);
-        InputValue(cash, GameManager.Instance.userData.cash);
+        UserData data = GameManager.Instance.currentUserData;
+        if (data != null)
+        {
+            userName.text = data.userName;
+            InputValue(balance, data.balance);
+            InputValue(cash, data.cash);
+        }
+        else Debug.Log($"userdata is null");
     }
 
     void InputValue(TextMeshProUGUI text,int value)

@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DepositState : IState
+public class SendMoneyState : IState
 {
     private PopupBankUI popoupBank;
 
-    public DepositState(PopupBankUI intance)
+    public SendMoneyState(PopupBankUI instance)
     {
-        popoupBank = intance;
+        popoupBank = instance;
     }
 
     public void EnterState()
     {
         popoupBank.homeUI.SetActive(false);
-        popoupBank.depositUI.SetActive(true);
+        popoupBank.depositUI.SetActive(false);
         popoupBank.withdrawalUI.SetActive(false);
-        popoupBank.sendMoneyUI.SetActive(false);
+        popoupBank.sendMoneyUI.SetActive(true);
         popoupBank.backBtn.SetActive(true);
     }
 
     public void ExitState()
     {
-        popoupBank.depositUI.SetActive(false);
+        popoupBank.sendMoneyUI.SetActive(false);
         popoupBank.backBtn.SetActive(false);
     }
 }
-
-

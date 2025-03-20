@@ -4,31 +4,34 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class DepositUI : MonoBehaviour
 {
-    public Button DepositBtn0;
-    public Button DepositBtn1;
-    public Button DepositBtn2;
     public TMP_InputField DepositInput;
     public Button DepositBtnInput;
     public Button backBtn;
+    public List<TransactionBtnInfo> deposits;
 
 
 
     private void OnEnable()
     {
-        DepositBtn0.onClick.AddListener(OnBtn0);
-        DepositBtn1.onClick.AddListener(OnBtn1);
-        DepositBtn2.onClick.AddListener(OnBtn2);
+        foreach (var deposit in deposits)
+        {
+            deposit.button.onClick.AddListener(() => Deposit(deposit.value));
+        }
         DepositBtnInput.onClick.AddListener(OnBtnInput);
         backBtn.onClick.AddListener(OnBackBtnClick);
     }
 
     private void OnDisable()
     {
-        DepositBtn0.onClick.RemoveListener(OnBtn0);
-        DepositBtn1.onClick.RemoveListener(OnBtn1);
-        DepositBtn2.onClick.RemoveListener(OnBtn2);
+        foreach (var deposit in deposits)
+        {
+            deposit.button.onClick.RemoveAllListeners();
+        }
+
         DepositBtnInput.onClick.RemoveListener(OnBtnInput);
         backBtn.onClick.RemoveListener(OnBackBtnClick);
     }
@@ -36,26 +39,13 @@ public class DepositUI : MonoBehaviour
 
     void OnBackBtnClick()
     {
-        PopupBank.Instance.OnClickHome();
+        UIManager.Instance.popupBankUI.OnClickHome();
     }
 
-    void OnBtn0()
-    {
-        Deposit(10000);
-    }
-    void OnBtn1()
-    {
-        Deposit(30000);
-    }
-
-    void OnBtn2()
-    {
-        Deposit(50000);
-    }
 
     void OnBtnInput()
     {
-        Deposit(InputDeposit());
+        Deposit(InputValue());
     }
 
     public void Deposit(int value)
@@ -63,9 +53,9 @@ public class DepositUI : MonoBehaviour
         
         if (value > 0)
         {
-            if (GameManager.Instance.userData != null)
+            if (GameManager.Instance.currentUserData != null)
             {
-                UserData userData = GameManager.Instance.userData;
+                UserData userData = GameManager.Instance.currentUserData;
                 if (userData.cash > value)
                 {
                     userData.balance += value;
@@ -75,14 +65,14 @@ public class DepositUI : MonoBehaviour
                 }
                 else
                 {
-                    PopupBank.Instance.PopupErrorUI("Cash is not enough!");
+                    UIManager.Instance.popupBankUI.PopupErrorUI("Cash is not enough!");
                 }
             }
         }
         else Debug.Log("0보다 큰 액수를 입력해주세요.");
     }
 
-    int InputDeposit()
+    int InputValue()
     {
         if (DepositInput != null)
         {

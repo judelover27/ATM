@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HomeState : IState
 {
-    private PopupBank popoupBank;
+    private PopupBankUI popoupBank;
 
-    public HomeState(PopupBank instance)
+    public HomeState(PopupBankUI instance)
     {
         popoupBank = instance;
     }
@@ -16,6 +16,7 @@ public class HomeState : IState
         popoupBank.homeUI.SetActive(true);
         popoupBank.depositUI.SetActive(false);
         popoupBank.withdrawalUI.SetActive(false);
+        popoupBank.sendMoneyUI.SetActive(false);
         popoupBank.backBtn.SetActive(false);
     }
 

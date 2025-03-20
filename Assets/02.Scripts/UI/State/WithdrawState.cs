@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WithdrawState : IState
 {
-    private PopupBank popoupBank;
+    private PopupBankUI popoupBank;
 
-    public WithdrawState(PopupBank instance)
+    public WithdrawState(PopupBankUI instance)
     {
         popoupBank = instance;
     }
@@ -16,6 +16,7 @@ public class WithdrawState : IState
         popoupBank.homeUI.SetActive(false);
         popoupBank.depositUI.SetActive(false);
         popoupBank.withdrawalUI.SetActive(true);
+        popoupBank.sendMoneyUI.SetActive(false);
         popoupBank.backBtn.SetActive(true);
     }
 

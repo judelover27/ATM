@@ -26,8 +26,10 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
-    public UserData userData;
+    public UserDatabase userDatabase;
+    public Dictionary<string, UserData> dataBaseDictionay;
+    public UserData currentUserData;
+    public string currentUserID;
     public UserInfo userInfo;
     string savePath;
 
@@ -42,34 +44,78 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        userInfo = FindObjectOfType<UserInfo>();
-        savePath = Path.Combine(Application.persistentDataPath, "userdata.json");
+        userInfo = FindObjectOfType<UserInfo>(true);
+        savePath = Path.Combine(Application.persistentDataPath, "userDatabase.json");
+        dataBaseDictionay = new Dictionary<string, UserData>();
+        LoadUserDatabase();
     }
 
     private void Start()
     {
-        if (!LoadUserData())
-        {
-            userData = new UserData("Hwang", 100000, 50000);
-        }
-
-        userInfo.Refresh();
     }
 
-    public void SaveUserData()
+    void UserDataBaseListToDictionary()
     {
-        string json = JsonUtility.ToJson(userData, true);
+        foreach (var user in userDatabase.users)
+        {
+            dataBaseDictionay[user.id] = user.userData;
+        }
+    }
+
+    void UserDataBaseDictionaryToList()
+    {
+        userDatabase.users.Clear();
+
+        foreach (var dictionary in dataBaseDictionay)
+        {
+            userDatabase.users.Add(new UserPair(dictionary.Key, dictionary.Value));
+        }
+    }
+
+    public void SaveUserDatabase()
+    {
+        UserDataBaseDictionaryToList();
+        string json = JsonUtility.ToJson(userDatabase, true);
         File.WriteAllText(savePath, json);
     }
 
-    public bool LoadUserData()
+    public void LoadUserDatabase()
     {
         if (File.Exists(savePath))
         {
             string json = File.ReadAllText(savePath);
-            userData = JsonUtility.FromJson<UserData>(json);
-            return true;
+            userDatabase = JsonUtility.FromJson<UserDatabase>(json);
         }
-        else return false;
+        else
+        {
+            userDatabase = new UserDatabase();
+        }
+
+        UserDataBaseListToDictionary();
+
+    }
+
+    public void SetCurrentUserData(UserData data)
+    {
+        currentUserData = data;
+        userInfo.Refresh();
+    }
+
+    public UserData GetUserData(string id)
+    {
+        if (dataBaseDictionay.ContainsKey(id))
+        {
+            return dataBaseDictionay[id];
+        }
+        return null;
+    }
+
+    public void SaveUserData()
+    {
+        if (currentUserData != null)
+        {
+            dataBaseDictionay[currentUserID] = currentUserData;
+            SaveUserDatabase();
+        }
     }
 }
