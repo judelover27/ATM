@@ -5,7 +5,17 @@
 ---
 
 ## 썸네일
-![Cover Image](./Assets/Thumbnail/PopupBackMain.png)
+
+![Cover Image](./Assets/Thumbnail/PopupBankSignIn.PNG)
+
+![Cover Image](./Assets/Thumbnail/PopupBankSignup.PNG)
+
+![Cover Image](./Assets/Thumbnail/PopupBankMain.PNG)
+
+![Cover Image](./Assets/Thumbnail/PopupError.PNG)
+
+![Cover Image](./Assets/Thumbnail/SendMoney.PNG)
+
 
 
 ---
