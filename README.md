@@ -5,7 +5,7 @@
 ---
 
 ## 썸네일
-![Cover Image](./Assets/Thumbnail/PopoupBackMain.PNG)
+![Cover Image](./Assets/Thumbnail/PopoupBackMain.png)
 
 
 ---
