@@ -52,10 +52,10 @@
 ###  데이터 처리
 - `UserData` 클래스
     - 이름, 현금, 잔액, 비밀번호
-- 'UserInfo' 클래스
+- 'UserPair' 클래스
     - UserData 객체와 ID
 - 'UserDataBase' 클래스
-    - UserInfo 리스트 저장
+    - UserPair 리스트 저장
     - 로드 시 Key ID Value UserData의 딕셔너리로 캐스팅
 - `GameManager` 클래스 (싱글톤)
     - 게임 내 유저 데이터 초기화 및 관리
