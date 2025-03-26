@@ -4,6 +4,12 @@
 
 ---
 
+## 썸네일
+![Cover Image](./Assets/Thumbnail/PopupBackMain.PNG)
+
+
+---
+
 ##  목표
 
 - 유니티 UI 구성 및 이벤트 시스템 학습
